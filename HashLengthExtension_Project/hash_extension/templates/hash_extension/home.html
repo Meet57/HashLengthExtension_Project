@@ -1,0 +1,31 @@
+<!-- hash_extension/templates/hash_extension/home.html -->
+{% extends "hash_extension/base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class="container mx-auto">
+    <h1 class="text-3xl font-bold my-8 text-center">Welcome, {{ user.username }}</h1>
+    <div>
+        {% if images %}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for image in images %}
+                    <div class="bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
+                        <div class="w-full h-64 overflow-hidden rounded-t-lg">
+                            <img class="w-full h-full object-cover" src="{{ image.image.url }}" alt="{{ image.image.title }}" />
+                        </div>
+                        <div class="p-6">
+                            <div>
+                                <h5 class="mb-4 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ image.image.title }}</h5>
+                            </div>
+                            <a href="{% url 'view_image' image.id image.user image.mac %}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800">
+                                View Image
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-center text-gray-500">No images available</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

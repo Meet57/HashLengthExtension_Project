@@ -1,0 +1,33 @@
+<!-- hash_extension/templates/hash_extension/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Hash Length Extension Project{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <nav class="bg-blue-600 p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="text-white font-semibold text-lg">
+                <a href="{% url 'home' %}">Home</a>
+            </div>
+            <div>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'upload_image' %}" class="ml-4 text-white hover:text-gray-200">Upload Image</a>
+                    <a href="{% url 'perform_attack' %}" class="ml-4 text-white hover:text-gray-200">Perform Attack</a>
+                    <a href="{% url 'logout' %}" class="ml-4 text-white hover:text-gray-200">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="ml-4 text-white hover:text-gray-200">Login</a>
+                    <a href="{% url 'register' %}" class="ml-4 text-white hover:text-gray-200">Register</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    <div class="container mx-auto mt-8 p-4">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>
