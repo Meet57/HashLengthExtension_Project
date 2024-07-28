@@ -10,7 +10,7 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('', views.home, name='home'),
     path('upload_image/', views.upload_image, name='upload_image'),
-    path('view_image/<int:image_id>/<str:owner>/<str:mac>/', views.view_image, name='view_image'),
+    path('view_image/', views.view_image, name='view_image'),
     path('perform_attack/', views.perform_attack, name='perform_attack'),
 ]
 

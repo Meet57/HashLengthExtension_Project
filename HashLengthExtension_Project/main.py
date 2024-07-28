@@ -2,7 +2,7 @@ import hashlib
 import HashTools
 import hmac as hmac_lib
 
-use_hmac = True
+use_hmac = False
 
 # Function to create a signature using hashlib or HMAC
 def create_signature(secret, data, hash_function="sha256", use_hmac=False):
@@ -41,22 +41,22 @@ def perform_extension_attack(secret_length, original_data, append_data, original
     return new_data, new_sig
 
 # Setup context
-secret = b"ABC9b2"  # Random secret key
+secret = b"ABC"  # Random secret key
 print(f"Secret: {secret}")
-original_data = b"username=meet&uid=1"
+original_data = b"id=3&owner=meet"
 sig = create_signature(secret, original_data, "md5", use_hmac)
 
 # Attempt to perform the extension attack (should fail with HMAC)
 # Note: HashTools is not used here as HMAC is resistant to length extension attacks
 try:
-    append_data = b"&admin=True"
+    append_data = b"&download=true"
     # perform_extension_attack is not applicable to HMAC
     new_data, new_sig = perform_extension_attack(len(secret), original_data, append_data, sig, "md5")
     new_valid = verify_signature(secret, new_data, new_sig, "md5", use_hmac)
-    print(f"New signature: {new_sig},\nNew data signature valid: {new_valid}")
+    print(f"New Data: {new_data},\nNew data signature valid: {new_sig}")
 except Exception as e:
     print("Extension attack failed (as expected with HMAC):", e)
 
 # Verify the original signature
 original_valid = verify_signature(secret, original_data, sig, "md5", use_hmac)
-print(f"Original signature: {sig},\nOriginal data signature valid: {original_valid}")
+print(f"Original data: {original_data},\nOriginal data signature valid: {sig}")
