@@ -7,7 +7,7 @@ from .models import Image
 from .forms import ImageForm, RegistrationForm
 import hashlib
 import hmac as hmac_lib
-import HashTools
+import hashtools as HashTools
 
 secret_key = b"ABC"
 use_hmac = False
