@@ -184,6 +184,8 @@ def perform_attack(request):
 
     return render(request, 'hash_extension/perform_attack.html')
 
+def project_brief(request):
+    return render(request, 'hash_extension/project_brief.html')
 
 def logout_view(request):
     logout(request)

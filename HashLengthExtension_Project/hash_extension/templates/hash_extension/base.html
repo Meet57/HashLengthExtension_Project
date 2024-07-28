@@ -12,6 +12,7 @@
         <div class="container mx-auto flex justify-between items-center">
             <div class="text-white font-semibold text-lg">
                 <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'project_brief' %}"  class="ml-4 text-white hover:text-gray-200">Project Brief</a>
             </div>
             <div>
                 {% if user.is_authenticated %}

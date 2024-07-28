@@ -1,0 +1,144 @@
+<!-- hash_extension/templates/hash_extension/project_brief.html -->
+{% extends "hash_extension/base.html" %}
+{% block title %}Project Brief: Hash Length Extension Attack Demonstration{% endblock %}
+{% block content %}
+<div class="container mx-auto px-4 py-6">
+    <h1 class="text-3xl font-bold mb-4">Project Brief: Hash Length Extension Attack Demonstration</h1>
+
+    <section class="mb-6">
+        <h2 class="text-2xl font-semibold">Overview</h2>
+        <p>This project is a web-based application that demonstrates a Hash Length Extension Attack on MD5 hash functions. It provides user authentication, image upload, viewing functionalities, and an interface to perform and visualize hash length extension attacks.</p>
+    </section>
+
+    <section class="mb-6">
+        <h2 class="text-2xl font-semibold">Features</h2>
+        <ol class="list-decimal list-inside">
+            <li><strong>User Authentication</strong>: Users can register, log in, and log out.</li>
+            <li><strong>Image Upload and Viewing</strong>: Authenticated users can upload images, view their images, and attempt to download them with a valid signature.</li>
+            <li><strong>Hash Length Extension Attack</strong>: The core feature demonstrating the vulnerability of certain hash functions to length extension attacks.</li>
+        </ol>
+    </section>
+
+    <section class="mb-6">
+        <h2 class="text-2xl font-semibold">Technologies Used</h2>
+        <ul class="list-disc list-inside">
+            <li><strong>Backend</strong>: Django framework</li>
+            <li><strong>Frontend</strong>: HTML, CSS (TailwindCSS for styling)</li>
+            <li><strong>Hashing Library</strong>: Python’s <code>hashlib</code> and a custom <code>HashTools</code> library</li>
+            <li><strong>Database</strong>: SQLite (default Django configuration)</li>
+        </ul>
+    </section>
+
+    <section class="mb-6">
+        <h2 class="text-2xl font-semibold">Project Structure</h2>
+        <ol class="list-decimal list-inside">
+            <li><strong>Models</strong>: Defines the <code>Image</code> model which stores image information.</li>
+            <li><strong>Forms</strong>: Handles user registration and image upload forms.</li>
+            <li><strong>Views</strong>: Manages user requests, including authentication, image management, and the attack demonstration.</li>
+        </ol>
+    </section>
+
+    <section class="mb-6">
+        <h2 class="text-2xl font-semibold">Key Components</h2>
+        <h3 class="text-xl font-medium">Authentication System</h3>
+        <ul class="list-disc list-inside ml-4">
+            <li><strong>Registration</strong>: Users can register with a username and password.</li>
+            <li><strong>Login</strong>: Users can log in with their credentials.</li>
+            <li><strong>Logout</strong>: Users can log out of their account.</li>
+        </ul>
+
+        <h3 class="text-xl font-medium">Image Management</h3>
+        <ul class="list-disc list-inside ml-4">
+            <li><strong>Upload Image</strong>: Users can upload images, which are stored in the database linked to their user account.</li>
+            <li><strong>View Image</strong>: Users can view their uploaded images. If the URL includes a valid MAC, users can download the image.</li>
+        </ul>
+
+        <h3 class="text-xl font-medium">Hash Length Extension Attack</h3>
+        <ul class="list-disc list-inside ml-4">
+            <li><strong>Create Signature</strong>: Generates a signature using a secret key and data string.</li>
+            <li><strong>Verify Signature</strong>: Validates the provided signature against the computed one.</li>
+            <li><strong>Perform Attack</strong>: Uses the <code>HashTools</code> library to demonstrate the length extension attack, generating a new URL with an appended parameter and a new valid signature.</li>
+        </ul>
+    </section>
+
+    <section class="mb-6">
+        <h2 class="text-2xl font-semibold">Workflow</h2>
+        <ol class="list-decimal list-inside">
+            <li><strong>User Registration and Login</strong>
+                <ul class="list-disc list-inside ml-4">
+                    <li>User registers via the registration form.</li>
+                    <li>On successful registration, the user is authenticated and redirected to the home page.</li>
+                    <li>User logs in using their credentials, which are authenticated by Django’s built-in authentication system.</li>
+                </ul>
+            </li>
+            <li><strong>Image Upload</strong>
+                <ul class="list-disc list-inside ml-4">
+                    <li>Logged-in user accesses the upload page.</li>
+                    <li>User submits an image through the upload form.</li>
+                    <li>The image is saved in the database linked to the user’s account.</li>
+                </ul>
+            </li>
+            <li><strong>Viewing and Downloading Images</strong>
+                <ul class="list-disc list-inside ml-4">
+                    <li>User navigates to the home page, where all uploaded images are listed.</li>
+                    <li>Each image has a URL with parameters (id, owner, and mac).</li>
+                    <li>When the user clicks the URL, the system verifies the MAC.</li>
+                    <li>If the MAC is valid and the download parameter is true, the user can download the image.</li>
+                </ul>
+            </li>
+            <li><strong>Performing Hash Length Extension Attack</strong>
+                <ul class="list-disc list-inside ml-4">
+                    <li>User navigates to the attack page and submits a URL of an image.</li>
+                    <li>The system parses the URL and extracts the parameters (id, owner, mac).</li>
+                    <li>It verifies the original MAC.</li>
+                    <li>Using the <code>HashTools</code> library, the system performs the length extension attack by appending <code>&download=true</code> to the original data.</li>
+                    <li>The library generates a new valid MAC for the modified data.</li>
+                    <li>The system returns a new URL with the appended parameter and new MAC.</li>
+                </ul>
+            </li>
+        </ol>
+    </section>
+
+    <section class="mb-6">
+        <h2 class="text-2xl font-semibold">Example Scenario</h2>
+        <ol class="list-decimal list-inside">
+            <li><strong>Registration and Login</strong>
+                <ul class="list-disc list-inside ml-4">
+                    <li>User registers with username <code>admin</code> and password.</li>
+                    <li>User logs in with the credentials.</li>
+                </ul>
+            </li>
+            <li><strong>Image Upload</strong>
+                <ul class="list-disc list-inside ml-4">
+                    <li>User uploads an image through the form.</li>
+                    <li>Image details are saved, including a computed MAC for the image data.</li>
+                </ul>
+            </li>
+            <li><strong>Viewing Images</strong>
+                <ul class="list-disc list-inside ml-4">
+                    <li>User visits the home page and sees a list of uploaded images.</li>
+                    <li>Each image link includes a MAC parameter for verification.</li>
+                </ul>
+            </li>
+            <li><strong>Performing the Attack</strong>
+                <ul class="list-disc list-inside ml-4">
+                    <li>User inputs the URL of an image to perform an attack.</li>
+                    <li>System validates the input URL and performs the length extension attack.</li>
+                    <li>System generates a new URL with the appended <code>&download=true</code> parameter and a new valid MAC.</li>
+                </ul>
+            </li>
+        </ol>
+    </section>
+
+    <section class="mb-6">
+        <h2 class="text-2xl font-semibold">Security Considerations</h2>
+        <ul class="list-disc list-inside">
+            <li><strong>HMAC Resistance</strong>: HMAC is used to protect against length extension attacks. If HMAC is used, the attack is not applicable.</li>
+            <li><strong>Signature Validation</strong>: Ensures that only valid signatures allow access to image download functionality.</li>
+            <li><strong>Authentication</strong>: Secures image upload and viewing functionalities to authenticated users only.</li>
+        </ul>
+    </section>
+
+    <p>This project provides a comprehensive demonstration of hash length extension attacks while implementing secure practices to prevent such vulnerabilities in a real-world scenario.</p>
+</div>
+{% endblock %}

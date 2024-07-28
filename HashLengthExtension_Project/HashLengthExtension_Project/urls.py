@@ -12,6 +12,7 @@ urlpatterns = [
     path('upload_image/', views.upload_image, name='upload_image'),
     path('view_image/', views.view_image, name='view_image'),
     path('perform_attack/', views.perform_attack, name='perform_attack'),
+    path('project_brief/', views.project_brief, name='project_brief'),
 ]
 
 # Serving media files during development
