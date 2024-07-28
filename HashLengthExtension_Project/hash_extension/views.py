@@ -10,7 +10,8 @@ import hmac as hmac_lib
 import HashTools
 
 secret_key = b"ABC"
-use_hmac = False  # Change this as per your requirement
+use_hmac = False
+hash_function = "md5"
 
 def create_signature(secret, data, hash_function="md5", use_hmac=False):
     if hash_function == "sha1":
@@ -94,7 +95,7 @@ def home(request):
         else:
             data = f"id={image.id}&owner={image.owner.username}"
 
-        mac = create_signature(secret_key, data.encode(), "md5", use_hmac)
+        mac = create_signature(secret_key, data.encode(), hash_function, use_hmac)
         images_data.append({
             'id': image.id,
             'user': image.owner.username,
@@ -124,7 +125,7 @@ def view_image(request):
         data = f"id={image.id}&owner={owner}".encode()
 
     # Verify the signature
-    if verify_signature(secret_key, data, mac, "md5", use_hmac):
+    if verify_signature(secret_key, data, mac, hash_function, use_hmac):
         return render(request, 'hash_extension/view_image.html', {'image': image, 'is_owner': (download == "true")})
     else:
         return render(request, 'hash_extension/view_image.html', {'image': image, 'is_owner': (download == "true")})
@@ -168,11 +169,9 @@ def perform_attack(request):
         if not use_hmac:
             append_data = b"&download=true"
             try:
-                new_data, new_sig = perform_extension_attack(len(secret_key), original_data, append_data, original_signature, "md5")
-                new_valid = verify_signature(secret_key, new_data, new_sig, "md5", use_hmac)
+                new_data, new_sig = perform_extension_attack(len(secret_key), original_data, append_data, original_signature, hash_function)
+                new_valid = verify_signature(secret_key, new_data, new_sig, hash_function, use_hmac)
                 if new_valid:
-                    # new_url = f"{parsed_url.scheme}://{parsed_url.netloc}/view_image/?{new_data_str}&mac={new_sig}"
-
                     new_url = parsed_url.scheme + "://" + parsed_url.netloc + "/view_image/?" + str(new_data).replace("b'","").replace("'", "") + "&mac=" + new_sig
 
                     return render(request, 'hash_extension/attack_result.html', {'new_url': new_url, 'new_sig': new_sig})
