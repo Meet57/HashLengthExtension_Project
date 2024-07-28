@@ -1,0 +1,24 @@
+<!-- templates/perform_attack.html -->
+{% extends "base.html" %}
+{% block title %}Perform Attack{% endblock %}
+{% block content %}
+<div class="container mx-auto">
+    <h1 class="text-2xl font-bold my-4">Perform Hash Length Extension Attack</h1>
+    <form method="post" class="bg-white p-6 rounded shadow-md" style="width: 400px;">
+        {% csrf_token %}
+        <div class="mb-4">
+            <label class="block text-sm">Original Data</label>
+            <input type="text" name="original_data" class="w-full p-2 border border-gray-300 rounded mt-1">
+        </div>
+        <div class="mb-4">
+            <label class="block text-sm">Data to Append</label>
+            <input type="text" name="append_data" class="w-full p-2 border border-gray-300 rounded mt-1">
+        </div>
+        <div class="mb-4">
+            <label class="block text-sm">Original Signature</label>
+            <input type="text" name="original_signature" class="w-full p-2 border border-gray-300 rounded mt-1">
+        </div>
+        <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded">Perform Attack</button>
+    </form>
+</div>
+{% endblock %}

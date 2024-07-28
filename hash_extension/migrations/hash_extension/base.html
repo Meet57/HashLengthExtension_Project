@@ -1,0 +1,27 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Hash Length Extension Project{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <nav class="bg-blue-500 p-4 text-white">
+        <div class="container mx-auto">
+            <a href="{% url 'home' %}" class="font-semibold">Home</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'perform_attack' %}" class="ml-4">Perform Attack</a>
+                <a href="{% url 'logout' %}" class="ml-4">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="ml-4">Login</a>
+            {% endif %}
+        </div>
+    </nav>
+    <div class="container mx-auto mt-4">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>
