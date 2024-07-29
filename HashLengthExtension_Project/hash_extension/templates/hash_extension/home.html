@@ -17,11 +17,11 @@
                                 <h5 class="mb-4 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ image.image.title }}</h5>
                             </div>
                             {% if image.download %}
-                            	<a href="{% url 'view_image' %}?id={{ image.id }}&owner={{ image.user }}&download=true&mac={{ image.mac }}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800">
+                            	<a href="{% url 'view_image' %}?id={{ image.id }}&owner={{ image.user }}&download=true&mac={{ image.mac }}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800">
                                 View Image
                             </a>
                             {% else %}
-                                <a href="{% url 'view_image' %}?id={{ image.id }}&owner={{ image.user }}&mac={{ image.mac }}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800">
+                                <a href="{% url 'view_image' %}?id={{ image.id }}&owner={{ image.user }}&mac={{ image.mac }}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800">
                                 View Image
                                 </a>
                             {% endif %}

@@ -9,3 +9,9 @@ class Image(models.Model):
 
     def __str__(self):
         return self.title
+
+class CounterMeasure(models.Model):
+    hmac = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.hmac

@@ -101,7 +101,8 @@ def home(request):
             'user': image.owner.username,
             'image': image.image,
             'download': request.user.username == image.owner.username,
-            'mac': mac
+            'mac': mac,
+            'title': image.title
         })
 
     return render(request, 'hash_extension/home.html', {'images': images_data})

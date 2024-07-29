@@ -10,16 +10,16 @@ class ImageForm(forms.ModelForm):
         fields = ['title', 'image']
         widgets = {
             'title': forms.TextInput(attrs={
-                'class': 'w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500'
+                'class': 'w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500'
             }),
             'image': forms.ClearableFileInput(attrs={
-                'class': 'w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500'
+                'class': 'w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500'
             })
         }
 
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={
-        'class': 'w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500'
+        'class': 'w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500'
     }))
 
     class Meta:
@@ -27,12 +27,12 @@ class RegistrationForm(UserCreationForm):
         fields = ['username', 'email', 'password1', 'password2']
         widgets = {
             'username': forms.TextInput(attrs={
-                'class': 'w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500'
+                'class': 'w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500'
             }),
             'password1': forms.PasswordInput(attrs={
-                'class': 'w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500'
+                'class': 'w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500'
             }),
             'password2': forms.PasswordInput(attrs={
-                'class': 'w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500'
+                'class': 'w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500'
             }),
         }
