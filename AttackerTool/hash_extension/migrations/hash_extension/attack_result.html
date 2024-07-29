@@ -1,0 +1,10 @@
+<!-- templates/attack_result.html -->
+{% extends "base.html" %}
+{% block title %}Attack Result{% endblock %}
+{% block content %}
+<div class="container mx-auto">
+    <h1 class="text-2xl font-bold my-4">Attack Result</h1>
+    <p><strong>New Data:</strong> {{ new_data }}</p>
+    <p><strong>New Signature:</strong> {{ new_sig }}</p>
+</div>
+{% endblock %}

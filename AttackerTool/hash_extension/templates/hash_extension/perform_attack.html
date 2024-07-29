@@ -1,0 +1,27 @@
+<!-- hash_extension/templates/hash_extension/perform_attack.html -->
+{% extends "hash_extension/base.html" %}
+{% block title %}Perform Length Extension Attack{% endblock %}
+{% block content %}
+<style>
+    body {
+        background: url('https://media.giphy.com/media/xTiTnx37nc3vjsdeLK/giphy.gif') no-repeat center center fixed;
+        background-size: cover;
+    }
+</style>
+<div class="min-h-screen flex items-center justify-center py-8 px-4">
+    <div class="bg-black bg-opacity-75 p-8 rounded-lg shadow-lg w-full md:w-3/4 lg:w-2/3">
+        <h1 class="text-3xl font-bold my-4 text-center text-red-500 font-mono">❌ Enter Vulnerable URL to attack ❌</h1>
+        {% if error %}
+            <div class="text-red-500 font-mono text-center mb-4">{{ error }}</div>
+        {% endif %}
+        <form method="post" class="bg-black text-red-500 p-6 rounded-lg shadow-lg font-mono">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-2" for="url">URL</label>
+                <input type="text" name="url" id="url" class="w-full p-3 border border-gray-700 bg-gray-900 text-red-500 rounded-lg focus:outline-none focus:border-red-500" required>
+            </div>
+            <button type="submit" class="w-full bg-red-500 text-black py-2 rounded-lg hover:bg-red-600 transition duration-300">Perform Attack</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

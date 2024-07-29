@@ -1,5 +1,5 @@
 from urllib.parse import urlparse, parse_qs
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -12,6 +12,14 @@ import HashTools
 secret_key = b"ABC"
 use_hmac = False
 hash_function = "md5"
+
+# from django.views.decorators.csrf import csrf_exempt
+
+# from django.shortcuts import render
+
+# def toggle_hmac(request):
+#     # Your view logic here
+#     return render(request, 'your_template.html')
 
 def create_signature(secret, data, hash_function="md5", use_hmac=False):
     if hash_function == "sha1":
@@ -101,7 +109,8 @@ def home(request):
             'user': image.owner.username,
             'image': image.image,
             'download': request.user.username == image.owner.username,
-            'mac': mac
+            'mac': mac,
+            'title': image.title
         })
 
     return render(request, 'hash_extension/home.html', {'images': images_data})
