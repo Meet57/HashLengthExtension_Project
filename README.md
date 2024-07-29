@@ -1,15 +1,25 @@
+# Project Users and Credentials
 
-attacker
-Testattacker@123
+This document lists the users and their respective credentials for the project.
 
-alice
-Testalice@123
+## Users
 
-bob
-Testbob@123
+- **Attacker**
+  - Username: `attacker`
+  - Password: `Testattacker@123`
 
-yash
-Testyash@123
+- **Alice**
+  - Username: `alice`
+  - Password: `Testalice@123`
 
-meet
-Testmeet@123
+- **Bob**
+  - Username: `bob`
+  - Password: `Testbob@123`
+
+- **Yash**
+  - Username: `yash`
+  - Password: `Testyash@123`
+
+- **Meet**
+  - Username: `meet`
+  - Password: `Testmeet@123`
