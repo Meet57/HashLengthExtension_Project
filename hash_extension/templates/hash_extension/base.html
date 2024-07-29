@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Hash Length Extension Project{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <nav class="bg-green-600 p-4 shadow-md">
@@ -17,6 +18,17 @@
                 {% if user.is_authenticated %}
                     <a href="{% url 'upload_image' %}" class="ml-4 text-white hover:text-gray-200">Upload Image</a>
                     <a href="{% url 'perform_attack' %}" class="ml-4 text-white hover:text-gray-200">Perform Attack</a>
+                    {% comment %} <div class="relative inline-block text-left">
+                        <button class="ml-4 text-white hover:text-gray-200">Prevention</button>
+                        <div class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                            <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                                <div class="flex items-center px-4 py-2">
+                                    <span class="text-gray-700">Use HMAC</span>
+                                    <input type="checkbox" id="hmac-switch" class="ml-2" {% if use_hmac %}checked{% endif %}>
+                                </div>
+                            </div>
+                        </div>
+                    </div> {% endcomment %}
                     <a href="{% url 'logout' %}" class="ml-4 text-white hover:text-gray-200">Logout</a>
                 {% else %}
                     <a href="{% url 'login' %}" class="ml-4 text-white hover:text-gray-200">Login</a>
@@ -29,5 +41,24 @@
         {% block content %}
         {% endblock %}
     </div>
+    {% comment %} <script>
+        $(document).ready(function() {
+            $('#hmac-switch').change(function() {
+                $.ajax({
+                    url: "{% url 'toggle_hmac' %}",
+                    type: "POST",
+                    data: {
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                    },
+                    success: function(response) {
+                        alert('HMAC usage toggled: ' + response.use_hmac);
+                    },
+                    error: function(response) {
+                        alert('Error toggling HMAC usage');
+                    }
+                });
+            });
+        });
+    </script> {% endcomment %}
 </body>
 </html>
