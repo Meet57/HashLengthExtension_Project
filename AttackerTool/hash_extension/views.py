@@ -17,6 +17,8 @@ def create_signature(secret, data, hash_function="md5", use_hmac=False):
         hash_obj = hashlib.sha256
     elif hash_function == "sha512":
         hash_obj = hashlib.sha512
+    elif hash_function == "sha384":
+        hash_obj = hashlib.sha384    
     else:
         raise ValueError("Invalid hash function")
 
@@ -67,7 +69,7 @@ def perform_attack(request):
 
         # Verify the original signature
         original_data = f"id={image_id}&owner={original_owner}".encode()
-        if not verify_signature(secret_key, original_data, original_signature, "md5", use_hmac):
+        if not verify_signature(secret_key, original_data, original_signature, hash_function, use_hmac):
             return render(request, 'hash_extension/perform_attack.html', {'error': 'Invalid signature'})
 
         # Generate new data and signature if not using HMAC
@@ -79,7 +81,7 @@ def perform_attack(request):
                 if new_valid:
                     new_url = parsed_url.scheme + "://" + parsed_url.netloc + "/view_image/?" + str(new_data).replace("b'","").replace("'", "") + "&mac=" + new_sig
 
-                    return render(request, 'hash_extension/attack_result.html', {'new_url': new_url, 'new_sig': new_sig})
+                    return render(request, 'hash_extension/attack_result.html', {'new_url': new_url, 'new_sig': new_sig, 'hash_function': hash_function})
                 else:
                     return render(request, 'hash_extension/perform_attack.html', {'error': 'New signature verification failed'})
             except Exception as e:

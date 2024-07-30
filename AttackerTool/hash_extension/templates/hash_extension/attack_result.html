@@ -10,6 +10,12 @@
         width: 100%;
         background: black;
     }
+
+    .overflow-x-auto {
+        overflow-x: auto;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+    }
 </style>
 
 <div style="background: url('https://media.giphy.com/media/lp3GUtG2waC88/giphy.gif') no-repeat center center fixed; background-size: cover; width: 100%; height: 100vh;">
@@ -22,20 +28,30 @@
         <div class="overflow-auto break-words bg-gray-200 p-3 rounded-lg mb-4 w-full">
             <a href="{{ new_url }}" class="text-red-500 underline">{{ new_url }}</a>
         </div>
-        <p class="text-black font-mono"><strong>New Signature:</strong> <span class="text-red-500">{{ new_sig }}</span></p>
+        <p class="text-black font-mono"><strong>New Signature:</strong> <span class="text-red-500 overflow-x-auto ">{{ new_sig }}</span></p>
         
+   
+
         <!-- Explanation Section -->
         <div class="bg-gray-100 p-4 rounded-lg mt-4">
             <h2 class="text-2xl font-bold mb-2 text-center text-blue-500 font-mono">URL Explanation</h2>
-            <p class="text-black font-mono"><strong>Base URL:</strong> <span class="text-blue-500">http://127.0.0.1:8090/view_image/</span></p>
+            <p class="text-black font-mono"><strong>Base URL:</strong> <span class="text-blue-500">http://127.0.0.1:8060/view_image/</span></p>
             <p class="text-black font-mono"><strong>Parameters:</strong></p>
             <ul class="list-disc pl-6 text-black font-mono">
-                <li><strong>id:</strong> <span class="text-blue-500">2</span> (The ID of the image to view)</li>
-                <li><strong>owner:</strong> <span class="text-blue-500">admin\x80\x00\x00\x00\x00\x00\x00\x00</span> (The owner of the image, with potentially malicious padding bytes)</li>
+                <li><strong>id:</strong> <span class="text-blue-500">num</span> (The ID of the image to view)</li>
+                <li><strong>owner:</strong> <span class="text-blue-500">alice\x80\x00\x00\x00\x00\x00\x00\x00</span> (The owner of the image, with potentially malicious padding bytes)</li>
                 <li><strong>download:</strong> <span class="text-blue-500">true</span> (A flag to indicate if the image should be downloaded)</li>
                 <li><strong>mac:</strong> <span class="text-blue-500">2383de5743d25a29be206c0a047dcad1</span> (A message authentication code to verify the integrity of the URL)</li>
             </ul>
+            <p class="text-black font-mono"><strong>Hash Function Used:</strong> <span class="text-blue-500">{{ hash_function }}</span></p>
         </div>
+
+             <!-- Home Button -->
+             <div class="text-center mt-4">
+                <a href="/" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                    Home
+                </a>
+            </div>
     </div>
 </div>
 {% endblock %}
