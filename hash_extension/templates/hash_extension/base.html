@@ -1,38 +1,140 @@
 <!-- hash_extension/templates/hash_extension/base.html -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Hash Length Extension Project{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        let toggle = false;
+        function toggleClick() {
+
+            const toggleElement = document.getElementById("toggle")
+            const toggleSpan = document.getElementById("toggleSpan")
+
+            if (toggle) {
+                toggleElement.classList.remove("bg-green-200");
+                toggleElement.classList.add("bg-red-200")
+                toggleSpan.classList.add("translate-x-0")
+                toggleSpan.classList.remove("translate-x-3.5")
+                toggle = false
+                console.log("clicked", toggle);
+
+            } else {
+                toggleElement.classList.add("bg-green-200");
+                toggleElement.classList.remove("bg-red-200")
+                toggleSpan.classList.remove("translate-x-0")
+                toggleSpan.classList.add("translate-x-3.5")
+                toggle = true
+                console.log("clicked", toggle);
+                toggle2 = true
+                toggleClick2();
+            }
+            $.ajax({
+                url: "{% url 'toggle_hmac' %}",
+                type: "GET",
+                data: {
+                    'hmac': toggle?0:1,
+                    'sha385': toggle2?0:1
+                },
+                success: function (response) {
+                    // alert('HMAC and sha358 usage toggled: ' + response.use_hmac);
+                    console.log("Done");
+                },
+                error: function (response) {
+                    // alert('Error toggling HMAC usage');
+                }
+            });
+        }
+
+        let toggle2 = false;
+        function toggleClick2() {
+
+            const toggleElement = document.getElementById("toggle2")
+            const toggleSpan = document.getElementById("toggleSpan2")
+            if (toggle2) {
+                toggleElement.classList.remove("bg-green-200");
+                toggleElement.classList.add("bg-red-200")
+                toggleSpan.classList.add("translate-x-0")
+                toggleSpan.classList.remove("translate-x-3.5")
+                toggle2 = false
+                console.log("clicked", toggle2);
+
+            } else {
+                toggleElement.classList.add("bg-green-200");
+                toggleElement.classList.remove("bg-red-200")
+                toggleSpan.classList.remove("translate-x-0")
+                toggleSpan.classList.add("translate-x-3.5")
+                toggle2 = true
+                toggle = true;
+                toggleClick();
+                console.log("clicked", toggle2);
+
+            }
+
+             $.ajax({
+                url: "{% url 'toggle_hmac' %}",
+                type: "GET",
+                data: {
+                    'hmac': toggle?0:1,
+                    'sha385': toggle2?0:1
+                },
+                success: function (response) {
+                    // alert('HMAC and sha358 usage toggled: ' + response.use_hmac);
+                    console.log("Done");
+                },
+                error: function (response) {
+                    // alert('Error toggling HMAC usage');
+                }
+            });
+        }
+    </script>
 </head>
+
 <body>
     <nav class="bg-green-600 p-4 shadow-md">
         <div class="container mx-auto flex justify-between items-center">
             <div class="text-white font-semibold text-lg">
                 <a href="{% url 'home' %}">Stock Images Library</a>
             </div>
-            <div>
+            <div class="flex gap-x-2">
                 {% if user.is_authenticated %}
-                    <a href="{% url 'upload_image' %}" class="ml-4 text-white hover:text-gray-200">Upload Image</a>
-                    <!-- <a href="{% url 'perform_attack' %}" class="ml-4 text-white hover:text-gray-200">Perform Attack</a> -->
-                    {% comment %} <div class="relative inline-block text-left">
-                        <button class="ml-4 text-white hover:text-gray-200">Prevention</button>
-                        <div class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-                            <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                                <div class="flex items-center px-4 py-2">
-                                    <span class="text-gray-700">Use HMAC</span>
-                                    <input type="checkbox" id="hmac-switch" class="ml-2" {% if use_hmac %}checked{% endif %}>
-                                </div>
-                            </div>
-                        </div>
-                    </div> {% endcomment %}
-                    <a href="{% url 'logout' %}" class="ml-4 text-white hover:text-gray-200">Logout</a>
+                <a href="{% url 'upload_image' %}" class="ml-4 text-white hover:text-gray-200">Upload Image</a>
+                <!-- <a href="{% url 'perform_attack' %}" class="ml-4 text-white hover:text-gray-200">Perform Attack</a> -->
+                <div class="flex gap-x-2 sm:col-span-2">
+                    <div class="flex h-6 items-center">
+                        <button onclick="toggleClick()" id="toggle" type="button"
+                            class="bg-red-200 flex w-8 flex-none cursor-pointer rounded-full bg-gray-200 p-px ring-1 ring-inset ring-gray-900/5 transition-colors duration-200 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            role="switch" aria-checked="false" aria-labelledby="switch-1-label">
+                            <span id="toggleSpan" aria-hidden="true"
+                                class="h-4 w-4 translate-x-0 transform rounded-full bg-white shadow-sm ring-1 ring-gray-900/5 transition duration-200 ease-in-out"></span>
+                        </button>
+                    </div>
+                    <label class="text-sm leading-6 text-white" id="switch-1-label">
+                        HMAC
+                    </label>
+                </div>
+                <div class="flex gap-x-2 sm:col-span-2">
+                    <div class="flex h-6 items-center">
+                        <button onclick="toggleClick2()" id="toggle2" type="button"
+                            class="bg-red-200 flex w-8 flex-none cursor-pointer rounded-full bg-gray-200 p-px ring-1 ring-inset ring-gray-900/5 transition-colors duration-200 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            role="switch" aria-checked="false" aria-labelledby="switch-1-label">
+                            <span id="toggleSpan2" aria-hidden="true"
+                                class="h-4 w-4 translate-x-0 transform rounded-full bg-white shadow-sm ring-1 ring-gray-900/5 transition duration-200 ease-in-out"></span>
+                        </button>
+                    </div>
+                    <label class="text-sm leading-6 text-white" id="switch-1-label">
+                        SHA385
+                    </label>
+                </div>
+                <a href="{% url 'logout' %}" class="ml-4 text-white hover:text-gray-200">Logout</a>
                 {% else %}
-                    <a href="{% url 'login' %}" class="ml-4 text-white hover:text-gray-200">Login</a>
-                    <a href="{% url 'register' %}" class="ml-4 text-white hover:text-gray-200">Register</a>
+                <a href="{% url 'login' %}" class="ml-4 text-white hover:text-gray-200">Login</a>
+                <a href="{% url 'register' %}" class="ml-4 text-white hover:text-gray-200">Register</a>
                 {% endif %}
             </div>
         </div>
@@ -41,24 +143,10 @@
         {% block content %}
         {% endblock %}
     </div>
-    {% comment %} <script>
-        $(document).ready(function() {
-            $('#hmac-switch').change(function() {
-                $.ajax({
-                    url: "{% url 'toggle_hmac' %}",
-                    type: "POST",
-                    data: {
-                        'csrfmiddlewaretoken': '{{ csrf_token }}'
-                    },
-                    success: function(response) {
-                        alert('HMAC usage toggled: ' + response.use_hmac);
-                    },
-                    error: function(response) {
-                        alert('Error toggling HMAC usage');
-                    }
-                });
-            });
-        });
+    {% comment %}
+    <script>
+
     </script> {% endcomment %}
 </body>
+
 </html>

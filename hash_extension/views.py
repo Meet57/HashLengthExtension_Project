@@ -3,19 +3,33 @@ from django.http import HttpResponseForbidden, JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .models import Image
+from .models import Image, CounterMeasure
 from .forms import ImageForm, RegistrationForm
 import hashlib
 import hmac as hmac_lib
 import HashTools
 
 secret_key = b"ABC"
-use_hmac = False
+
 hash_function = "md5"
 
+@login_required
+def toggle_security(request):
+    state = CounterMeasure.objects.get(id=1)
+    state.hmac = request.GET.get("hmac", None)=='0'
+    state.sha385 = request.GET.get("sha385", None)=='0'
+
+    state.save()
+
+    return JsonResponse({"status": "success"})
 
 def create_signature(secret, data, hash_function="md5", use_hmac=False):
-    if hash_function == "sha1":
+    use_hmac = CounterMeasure.objects.all()[0].hmac
+    use_sha385 = CounterMeasure.objects.all()[0].sha385
+
+    if use_sha385:
+        hash_obj = hashlib.sha384
+    elif hash_function == "sha1":
         hash_obj = hashlib.sha1
     elif hash_function == "md5":
         hash_obj = hashlib.md5
@@ -97,7 +111,8 @@ def home(request):
             data = f"id={image.id}&owner={image.owner.username}&download=true"
         else:
             data = f"id={image.id}&owner={image.owner.username}"
-
+        use_hmac = CounterMeasure.objects.all()[0].hmac
+        use_sha385 = CounterMeasure.objects.all()[0].sha385
         mac = create_signature(secret_key, data.encode(), hash_function, use_hmac)
         images_data.append({
             'id': image.id,
@@ -130,6 +145,8 @@ def view_image(request):
     else:
         data = f"id={image.id}&owner={owner}".encode()
 
+    use_hmac = CounterMeasure.objects.all()[0].hmac
+    use_sha385 = CounterMeasure.objects.all()[0].sha385
     # Verify the signature
     if verify_signature(secret_key, data, mac, hash_function, use_hmac):
         return render(request, 'hash_extension/view_image.html', {'image': image, 'is_owner': (download == "true")})
@@ -153,6 +170,8 @@ def upload_image(request):
 
 @login_required
 def perform_attack(request):
+    use_hmac = CounterMeasure.objects.all()[0].hmac
+    use_sha385 = CounterMeasure.objects.all()[0].sha385
     if request.method == 'POST':
         url = request.POST['url']
 

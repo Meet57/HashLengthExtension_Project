@@ -6,5 +6,5 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('hash_extension.urls')),  # Include the app's URLs
-    # path('toggle_hmac/', views.toggle_hmac, name='toggle_hmac'),
+    path('toggle/', views.toggle_security, name='toggle_hmac'),
 ]
