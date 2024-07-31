@@ -1,0 +1,12 @@
+{
+    "folder-color.pathColors": [
+        {
+            "folderPath": "HashLengthExtension_Project/AttackerTool/",
+            "color": "foldercolorizer.LightRed"
+        },
+        {
+            "folderPath": "HashLengthExtension_Project/hash_extension/",
+            "color": "foldercolorizer.SeaGreenMedium"
+        }
+    ]
+}
